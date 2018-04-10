@@ -1,0 +1,79 @@
+- name: Bootstrap setup for lab exercise 11
+  hosts: all
+  tasks:
+    - name: Give access permissions to tty
+      shell: "usermod -a -G tty {{ item }}"
+      loop:
+        - faculty 
+        - event1
+        - cs145grad
+        - cs145qrhonor
+        - cs145uvhonor
+        - cs145uvxclnce
+        - cs145xyhonor
+        - cs145xclnce
+    - name: Give access permissions to dialout
+      shell: "usermod -a -G dialout {{ item }}"
+      loop:
+        - faculty 
+        - sysad
+        - cs145grad
+        - cs145qrhonor
+        - cs145uvhonor
+        - cs145uvxclnce
+        - cs145xyhonor
+        - cs145xclnce
+    - name: Copy add_connection.py to all machines
+      copy:
+        src: add_connection.py
+        dest: /home/faculty/add_connection.py
+        owner: faculty
+        group: faculty
+        mode: 0644
+    - name: Execute add_connection.py on all machines
+      shell: "python add_connection.py"
+    - name: Create folder for ethernet library
+      file: 
+        state: directory
+        path: "/home/{{ item }}/sketchbook/libraries/etherShield"
+        owner: "{{ item }}"
+        group: "{{ item }}" 
+      loop:
+        - faculty
+        - sysad
+        - cs145grad
+        - cs145qrhonor
+        - cs145uvhonor
+        - cs145uvxclnce
+        - cs145xyhonor
+        - cs145xclnce 
+    - name: Import ethernet library to user accounts
+      unarchive:
+        src: etherShield.zip
+        dest: "/home/{{ item }}/sketchbook/libraries/etherShield"
+      loop:
+        - faculty
+        - sysad
+        - cs145grad
+        - cs145qrhonor
+        - cs145uvhonor
+        - cs145uvxclnce
+        - cs145xyhonor
+        - cs145xclnce 
+    - name: Change ownership of all ethernet libraries
+      file:
+        path: "/home/{{ item }}/sketchbook/libraries/etherShield"
+        owner: "{{ item }}"
+        group: "{{ item }}"
+        recurse: yes
+      loop:
+        - faculty
+        - sysad
+        - cs145grad
+        - cs145qrhonor
+        - cs145uvhonor
+        - cs145uvxclnce
+        - cs145xyhonor
+        - cs145xclnce 
+    - name: Restart all machines
+      shell: "/sbin/reboot 0"
