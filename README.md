@@ -8,3 +8,7 @@
     ```
     ansible-playbook -i cs145tl.ini add-ssh-keys.yaml
     ```
+3. Execute setup script
+    ```
+    ansible-playbook -i cs145tl.ini -k -K -u faculty --become bootstrap.yaml
+    ```
