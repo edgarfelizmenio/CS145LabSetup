@@ -6,5 +6,5 @@
     ```
 2. Add all computers to known_hosts and copy their ssh keys
     ```
-    ansible-playbook -i cs145tl.ini all add-ssh-keys.yaml
+    ansible-playbook -i cs145tl.ini add-ssh-keys.yaml
     ```
