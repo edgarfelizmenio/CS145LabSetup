@@ -1,0 +1,29 @@
+- name: Bootstrap setup for lab exercise 11
+  hosts: all
+  tasks:
+    - name: deploy binary for changing IP address
+      copy:
+        src: change_ip_address
+        dest: /home/{{ item }}/change_ip_address
+        owner: root
+        group: root
+        mode: 0755
+      loop:
+        - cs145mqrhonor
+        - cs145mqrxclnce
+        - cs145myzhonor
+        - cs145myzxclnce
+    - name: set owner permissions of binary
+      shell: echo "monicca"
+      loop:
+        - cs145mqrhonor
+        - cs145mqrxclnce
+        - cs145myzhonor
+        - cs145myzxclnce
+    - name: set access permissions of binary
+      shell: echo "lolz"
+      loop:
+        - cs145mqrhonor
+        - cs145mqrxclnce
+        - cs145myzhonor
+        - cs145myzxclnce
