@@ -1,0 +1,2 @@
+sudo chmod u+s <binary name>
+sudo chown root:root <binary name>
